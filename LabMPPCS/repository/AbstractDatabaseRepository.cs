@@ -12,7 +12,7 @@ using MySql.Data.Types;
 
 namespace LabMPPCS.repository
 {
-    abstract class AbstractDatabaseRepository<T,ID> : IDatabaseRepository<T,ID> where T:IHasId<ID>
+    public abstract class AbstractDatabaseRepository<T,ID> : IDatabaseRepository<T,ID> where T:IHasId<ID>
     {
         protected readonly DatabaseConnectionManager _databaseConnectionManager;
         protected readonly string _tableName;

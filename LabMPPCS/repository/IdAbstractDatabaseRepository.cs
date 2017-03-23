@@ -10,7 +10,7 @@ using MySql.Data.MySqlClient;
 
 namespace LabMPPCS.repository
 {
-    abstract class IdAbstractDatabaseRepository<T> : AbstractDatabaseRepository<T,Int32> where T : IHasId<Int32>
+    public abstract class IdAbstractDatabaseRepository<T> : AbstractDatabaseRepository<T,Int32> where T : IHasId<Int32>
     {
         protected IdAbstractDatabaseRepository(DatabaseConnectionManager databaseConnectionManager, string tableName) : base(databaseConnectionManager, tableName)
         {
@@ -20,6 +20,8 @@ namespace LabMPPCS.repository
         {
             Int32 id = -1;
             MySqlTransaction transaction = null;
+            List<String> paramsList = new List<string>();
+            List<String> valuesList = new List<string>();
             try
             {
                 var con = _databaseConnectionManager.GetConnection();
@@ -28,17 +30,16 @@ namespace LabMPPCS.repository
                     using (var comm = con.CreateCommand())
                     {
                         var map = ToMap(item);
-                        var columns = "`" + GetIdName() + "`";
-                        var values = map[GetIdName()];
                         map.Remove(GetIdName());
 
                         foreach (var key in map.Keys)
                         {
-                            columns += ",`" + key + "`";
-                            values += "," + map[key];
+                            paramsList.Add("`" + key + "`");
+                            valuesList.Add(map[key]);
                         }
 
-                        comm.CommandText = $"INSERT INTO `{_tableName}` ({columns}) VALUES ({values})";
+                        comm.CommandText =
+                            $"INSERT INTO `{_tableName}` ({String.Join(",", paramsList)}) VALUES ({String.Join(",", valuesList)})";
 
                         var result = comm.ExecuteNonQuery();
                         if (result == 0)
@@ -47,10 +48,11 @@ namespace LabMPPCS.repository
                         id = comm.ExecuteScalar() is int ? (int) comm.ExecuteScalar() : 0;
                         if (result == 0)
                             throw new RepositoryException($"No item added !");
+                        transaction.Commit();
                     }
                 }
             }
-                
+
             catch (MySqlException e)
             {
                 try
@@ -62,6 +64,10 @@ namespace LabMPPCS.repository
                     CodeThrowExceptionStatement(new RepositoryException(e.Message + e1.Message));
                 }
                 CodeThrowExceptionStatement(e);
+            }
+            finally
+            {
+                transaction?.Dispose();
             }
             return id;
         }

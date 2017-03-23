@@ -13,6 +13,10 @@ namespace LabMppCsharp.utils.exceptions
         {
         }
 
+        public ControllerException(Exception e) : base(e.Message)
+        {
+        }
+
         public ControllerException(string message) : base(message)
         {
         }
@@ -24,5 +28,7 @@ namespace LabMppCsharp.utils.exceptions
         protected ControllerException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
+
+  
     }
 }

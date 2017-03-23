@@ -18,7 +18,7 @@ namespace LabMppCsharp.utils
         public MySqlConnection GetConnection()
         {
             if (!ReferenceEquals(null, _connection)) return _connection;
-            _myConnectionString = "server=127.0.0.1;uid=root;" + "pwd=password;database=mpp;";
+            _myConnectionString = "server=127.0.0.1;uid=root;" + "pwd=password;database=ticktes_mpp;";
             _connection = new MySqlConnection {ConnectionString = _myConnectionString};
             _connection.Open();
             return _connection;
@@ -26,10 +26,13 @@ namespace LabMppCsharp.utils
 
         public MySqlConnection GetNewConnection()
         {
-            _myConnectionString = "server=127.0.0.1;uid=root;" + "pwd=password;database=mpp;";
+            _myConnectionString = "server=127.0.0.1;uid=root;" + "pwd=password;database=ticktes_mpp;";
             _connection = new MySqlConnection { ConnectionString = _myConnectionString };
             _connection.Open();
             return _connection;
         }
+
+
+
     }
 }

@@ -10,7 +10,7 @@ using LabMPPCS.repository;
 
 namespace LabMPPCS.controller
 {
-    class TicketController
+    public class TicketController
     {
         private readonly TicketRepository _ticketRepository;
         private readonly MatchRepository _matchRepository;
@@ -20,7 +20,7 @@ namespace LabMPPCS.controller
             _matchRepository = matchRepository;
         }
 
-        public void Add(String quantityS,String idMatchS)
+        public void Add(String quantityS,String idMatchS,String person)
         {
             Int32 idMatch = 0;
             Int32 quantity = 0;
@@ -29,7 +29,7 @@ namespace LabMPPCS.controller
                 idMatch = Int32.Parse(idMatchS);
                 quantity = Int32.Parse(quantityS);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 CodeThrowExceptionStatement("Invalid arguments");
             }
@@ -43,7 +43,7 @@ namespace LabMPPCS.controller
                 }
                 match.Tickets -= quantity;
                 this._matchRepository.Update(match);
-                this._ticketRepository.AddId(new Ticket(quantity, match.Id));
+                this._ticketRepository.AddId(new Ticket(quantity,idMatch,person));
             }
             catch (Exception e)
             {

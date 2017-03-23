@@ -9,7 +9,7 @@ using LabMPPCS.repository;
 
 namespace LabMPPCS.controller
 {
-    class MatchController
+    public class MatchController
     {
         private readonly MatchRepository _repository;
 
@@ -38,7 +38,7 @@ namespace LabMPPCS.controller
             {
                 id = Int32.Parse(idS);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 CodeThrowExceptionStatement("Invalid integer number");
             }
@@ -64,7 +64,7 @@ namespace LabMPPCS.controller
                 tickets = Int32.Parse(ticketsS);
                 price = Double.Parse(priceS);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 CodeThrowExceptionStatement("Invalid parameters");
             }
@@ -78,6 +78,19 @@ namespace LabMPPCS.controller
             {
                 CodeThrowExceptionStatement(e);
             }
+        }
+
+        public IList<Match> GetAll()
+        {
+            try
+            {
+                return this._repository.GetAll();
+            }
+            catch (Exception e)
+            {
+                CodeThrowExceptionStatement(e);
+            }
+            return null;
         }
 
         protected void CodeThrowExceptionStatement(Exception e)

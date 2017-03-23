@@ -9,7 +9,7 @@ using MySql.Data.MySqlClient;
 
 namespace LabMPPCS.repository
 {
-    class TicketRepository : IdAbstractDatabaseRepository<Ticket>
+    public class TicketRepository : IdAbstractDatabaseRepository<Ticket>
     {
         public TicketRepository(DatabaseConnectionManager databaseConnectionManager, string tableName) : base(databaseConnectionManager, tableName)
         {
@@ -22,7 +22,7 @@ namespace LabMPPCS.repository
 
         protected override Ticket ToObject(MySqlDataReader reader)
         {
-            var t = new Ticket( reader.GetInt32(0),reader.GetInt32(1), reader.GetInt32(2));
+            var t = new Ticket( reader.GetInt32(0),reader.GetInt32(3),reader.GetInt32(1),reader.GetString(2));
             return t;
         }
 
@@ -31,6 +31,8 @@ namespace LabMPPCS.repository
             var map = new Dictionary<String, String>();
             map.Add("id", item.Id.ToString());
             map.Add("idMatch", item.IdMatch.ToString());
+            map.Add("person", "'" + item.Person + "'");
+
             map.Add("quantity", item.Quantity.ToString());
             return map;
         }

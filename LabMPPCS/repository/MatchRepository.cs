@@ -9,7 +9,7 @@ using MySql.Data.MySqlClient;
 
 namespace LabMPPCS.repository
 {
-    class MatchRepository : IdAbstractDatabaseRepository<Match>
+    public class MatchRepository : IdAbstractDatabaseRepository<Match>
     {
         public MatchRepository(DatabaseConnectionManager databaseConnectionManager, string tableName) : base(databaseConnectionManager, tableName)
         {
@@ -24,17 +24,18 @@ namespace LabMPPCS.repository
         {
             Dictionary<String, String> map = new Dictionary<string, string>();
             map.Add("id", item.Id.ToString());
-            map.Add("team1", item.Team1);
-            map.Add("team2", item.Team2);
-            map.Add("stage", item.Stage);
-            map.Add("ticketRemainig", item.Tickets.ToString());
-            map.Add("price", item.ToString());
+            map.Add("team1", "'" + item.Team1 + "'");
+            map.Add("team2", "'" + item.Team2 + "'");
+            map.Add("stage", "'" + item.Stage + "'");
+            map.Add("tickets", item.Tickets.ToString());
+            map.Add("price", item.Price.ToString());
             return map;
         }
 
         protected override Match ToObject(MySqlDataReader reader)
         {
-            throw new NotImplementedException();
+            Match m = new Match(reader.GetInt32(0),reader.GetString(1),reader.GetString(2),reader.GetString(3),reader.GetInt32(4),reader.GetDouble(5));
+            return m;
         }
     }
 }
