@@ -23,10 +23,13 @@ namespace LabMPPCS
             
             MatchRepository matchRepository = new MatchRepository(databaseConnectionManager,"matches");
             TicketRepository ticketRepository = new TicketRepository(databaseConnectionManager,"tickets");
+            UserRepository userRepository = new UserRepository(databaseConnectionManager,"users");
 
             MatchController matchController = new MatchController(matchRepository);
             TicketController ticketController = new TicketController(ticketRepository,matchRepository);
-            Application.Run(new Form1(matchController,ticketController));
+            UserController userController = new UserController(userRepository);
+
+            Application.Run(new LogInForm(userController, matchController,ticketController));
         }
     }
 }

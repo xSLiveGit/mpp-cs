@@ -182,7 +182,7 @@ namespace LabMPPCS.repository
                 var con = _databaseConnectionManager.GetConnection();
                 using (var comm = con.CreateCommand())
                 {
-                    comm.CommandText = $"SELECT * FROM `{_tableName}` WHERE `{GetIdName()}` = {id}";
+                    comm.CommandText = $"SELECT * FROM `{_tableName}` WHERE `{GetIdName()}` = {"'" + id.ToString() + "'"}";
                     using (var result = comm.ExecuteReader())
                     {
                         if (result.HasRows)

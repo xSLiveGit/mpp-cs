@@ -114,6 +114,7 @@
             this.button_FilterSort.TabIndex = 4;
             this.button_FilterSort.Text = "Filter and Sort";
             this.button_FilterSort.UseVisualStyleBackColor = true;
+            this.button_FilterSort.Click += new System.EventHandler(this.button_FilterSort_Click);
             // 
             // button_LogOut
             // 
@@ -123,6 +124,7 @@
             this.button_LogOut.TabIndex = 5;
             this.button_LogOut.Text = "LogOut";
             this.button_LogOut.UseVisualStyleBackColor = true;
+            this.button_LogOut.Click += new System.EventHandler(this.button_LogOut_Click);
             // 
             // Form1
             // 

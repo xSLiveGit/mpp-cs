@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using LabMppCsharp.utils.exceptions;
@@ -101,6 +102,16 @@ namespace LabMPPCS.controller
         protected void CodeThrowExceptionStatement(String e)
         {
             throw new ControllerException(e);
+        }
+
+        public List<Match> GetAllMatchesWithRemainingTickets()
+        {
+            return    ( 
+                        from s in _repository.GetAll()
+                        where s.Tickets > 0
+                        orderby s.Tickets descending 
+                        select s
+                       ).ToList();
         }
     }
 }

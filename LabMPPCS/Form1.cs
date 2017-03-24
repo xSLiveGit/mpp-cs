@@ -18,12 +18,15 @@ namespace LabMPPCS
     {
         private readonly MatchController matchController;
         private readonly TicketController ticketController;
-        private BindingList<Match> matchList; 
-        public Form1(MatchController matchController,TicketController ticketController)
+        private BindingList<Match> matchList;
+        private Form logInForm;
+        private bool filtered = false;
+        public Form1(MatchController matchController,TicketController ticketController,Form logInForm)
         {
             InitializeComponent();
             this.matchController = matchController;
             this.ticketController = ticketController;
+            this.logInForm = logInForm;
             Initialise();
         }
 
@@ -35,16 +38,7 @@ namespace LabMPPCS
 
         private void BindMatches()
         {
-            matchList = new BindingList<Match>(matchController.GetAll());
-            dataGridViewMatches.Columns.Clear();//DE CE DACA ADAUG DIN INTERFATA NU POT LEGA BUTOANELE?
-            dataGridViewMatches.DataSource = matchList.Select(match =>
-                    new {
-                        Team1 = match.Team1,
-                        Team2 = match.Team2,
-                        Stage = match.Stage,
-                        Tickets = match.Tickets,
-                        Price = match.Price
-                    }).ToList();
+            BindTable(matchController.GetAll());
         }
 
         private void dataGridViewMatches_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -54,8 +48,8 @@ namespace LabMPPCS
 
         private void button_Add_Click(object sender, EventArgs e)
         {
-//            try
-//            {
+            try
+            {
                 if (dataGridViewMatches.SelectedRows.Count != 1)
                 {
                     MessageBox.Show("Select 1 row");
@@ -69,15 +63,50 @@ namespace LabMPPCS
                 int numberOfTickets = Int32.Parse(textBox_Tickets.Text);
                 ticketController.Add(textBox_Tickets.Text, selectedShow.Id.ToString(), textBox_Person.Text);
                 BindMatches();
-//            }
-//            catch (Exception ex) when (ex is ControllerException || ex is MySqlException)
-//            {
-//                MessageBox.Show(ex.Message);
-//            }
-//            catch (System.NullReferenceException e1)
-//            {
-//                MessageBox.Show("Invalid pointer." + e1.Message);
-//            }
+            }
+            catch (Exception ex) when (ex is ControllerException || ex is MySqlException)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (System.NullReferenceException e1)
+            {
+                MessageBox.Show("Invalid pointer." + e1.Message);
+            }
         }
+
+        private void button_LogOut_Click(object sender, EventArgs e)
+        {
+            this.logInForm.Show();
+            this.Close();
+        }
+
+        public void BindTable(IList<Match> source)
+        {
+            matchList = new BindingList<Match>(source);
+            dataGridViewMatches.Columns.Clear();//DE CE DACA ADAUG DIN INTERFATA NU POT LEGA BUTOANELE?
+            dataGridViewMatches.DataSource = matchList.Select(match =>
+                    new {
+                        Team1 = match.Team1,
+                        Team2 = match.Team2,
+                        Stage = match.Stage,
+                        Tickets = match.Tickets,
+                        Price = match.Price
+                    }).ToList();
+        }
+
+        private void button_FilterSort_Click(object sender, EventArgs e)
+        {
+            if (!filtered)
+            {
+                BindTable(matchController.GetAllMatchesWithRemainingTickets());
+                filtered = true;
+            }
+            else
+            {
+                BindTable(matchController.GetAll());
+                filtered = false;
+            }
+        }
+       
     }
 }

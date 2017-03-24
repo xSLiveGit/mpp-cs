@@ -52,9 +52,11 @@
   <ItemGroup>
     <Compile Include="controller\MatchController.cs" />
     <Compile Include="controller\TicketController.cs" />
+    <Compile Include="controller\UserController.cs" />
     <Compile Include="domain\HasID.cs" />
     <Compile Include="domain\Match.cs" />
     <Compile Include="domain\Ticket.cs" />
+    <Compile Include="domain\User.cs" />
     <Compile Include="exception\ControllerException.cs" />
     <Compile Include="exception\EntityArgumentException.cs" />
     <Compile Include="exception\RepositoryException.cs" />
@@ -64,6 +66,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="LogInForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogInForm.Designer.cs">
+      <DependentUpon>LogInForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="repository\AbstractDatabaseRepository.cs" />
@@ -72,10 +80,15 @@
     <Compile Include="repository\IRepository.cs" />
     <Compile Include="repository\MatchRepository.cs" />
     <Compile Include="repository\TicketRepository.cs" />
+    <Compile Include="repository\UserRepository.cs" />
+    <Compile Include="utils\Crypto.cs" />
     <Compile Include="utils\DatabaseManager\DatabaseConnectionManager.cs" />
     <Compile Include="utils\UtilStaticClass.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogInForm.resx">
+      <DependentUpon>LogInForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
