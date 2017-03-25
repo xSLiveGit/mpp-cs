@@ -6,18 +6,26 @@ using System.Threading.Tasks;
 using LabMppCsharp.utils;
 using LabMppCsharp.utils.exceptions;
 using LabMPPCS.domain;
+using LabMPPCS.Validator;
 using MySql.Data.MySqlClient;
 
 namespace LabMPPCS.repository
 {
     public abstract class IdAbstractDatabaseRepository<T> : AbstractDatabaseRepository<T,Int32> where T : IHasId<Int32>
     {
-        protected IdAbstractDatabaseRepository(DatabaseConnectionManager databaseConnectionManager, string tableName) : base(databaseConnectionManager, tableName)
+        protected IdAbstractDatabaseRepository(DatabaseConnectionManager databaseConnectionManager, string tableName,IValidator<T> validator) : base(databaseConnectionManager, tableName, validator)
         {
         }
 
+        /// <summary>
+        /// Add an item with auto-generate id and return the id.
+        /// Throw RepositoryException if the add operation fail.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>the id of added item</returns>
         public Int32 AddId(T item)
         {
+            _validator.Validate(item);
             Int32 id = -1;
             MySqlTransaction transaction = null;
             List<String> paramsList = new List<string>();

@@ -60,7 +60,6 @@ namespace LabMPPCS
                 Match selectedShow = matchList[index];
 
                 string clientName = textBox_Person.Text;
-                int numberOfTickets = Int32.Parse(textBox_Tickets.Text);
                 ticketController.Add(textBox_Tickets.Text, selectedShow.Id.ToString(), textBox_Person.Text);
                 BindMatches();
             }

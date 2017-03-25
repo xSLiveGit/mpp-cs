@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using LabMppCsharp.utils;
 using LabMPPCS.domain;
+using LabMPPCS.Validator;
 using MySql.Data.MySqlClient;
 
 namespace LabMPPCS.repository
 {
     public class MatchRepository : IdAbstractDatabaseRepository<Match>
     {
-        public MatchRepository(DatabaseConnectionManager databaseConnectionManager, string tableName) : base(databaseConnectionManager, tableName)
+        public MatchRepository(DatabaseConnectionManager databaseConnectionManager, string tableName,MatchValidator validator) : base(databaseConnectionManager, tableName,validator)
         {
         }
 

@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using LabMppCsharp.utils;
 using LabMPPCS.domain;
+using LabMPPCS.Validator;
 using MySql.Data.MySqlClient;
 
 namespace LabMPPCS.repository
 {
     public class UserRepository : AbstractDatabaseRepository<User,String>
     {
-        public UserRepository(DatabaseConnectionManager databaseConnectionManager, string tableName) : base(databaseConnectionManager, tableName)
+        public UserRepository(DatabaseConnectionManager databaseConnectionManager, string tableName,UserValidator validator) : base(databaseConnectionManager, tableName,validator)
         {
         }
 

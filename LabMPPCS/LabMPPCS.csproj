@@ -84,6 +84,10 @@
     <Compile Include="utils\Crypto.cs" />
     <Compile Include="utils\DatabaseManager\DatabaseConnectionManager.cs" />
     <Compile Include="utils\UtilStaticClass.cs" />
+    <Compile Include="Validator\IValidator.cs" />
+    <Compile Include="Validator\MatchValidator.cs" />
+    <Compile Include="Validator\TicketValidator.cs" />
+    <Compile Include="Validator\UserValidator.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

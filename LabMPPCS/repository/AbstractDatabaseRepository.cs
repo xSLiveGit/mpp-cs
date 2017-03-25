@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using LabMppCsharp.utils;
 using LabMppCsharp.utils.exceptions;
 using LabMPPCS.domain;
+using LabMPPCS.Validator;
 using MySql.Data.MySqlClient;
 using MySql.Data.Types;
 
@@ -16,11 +17,12 @@ namespace LabMPPCS.repository
     {
         protected readonly DatabaseConnectionManager _databaseConnectionManager;
         protected readonly string _tableName;
-
-        protected AbstractDatabaseRepository(DatabaseConnectionManager databaseConnectionManager, string tableName)
+        protected IValidator<T> _validator;
+        protected AbstractDatabaseRepository(DatabaseConnectionManager databaseConnectionManager, string tableName,IValidator<T> validator )
         {
             _databaseConnectionManager = databaseConnectionManager;
             _tableName = tableName;
+            _validator = validator;
         }
 
         /// <summary>
@@ -78,6 +80,7 @@ namespace LabMPPCS.repository
         /// <param name="item"></param>
         public virtual void Add(T item)
         {
+            _validator.Validate(item);
             try
             {
          
@@ -116,6 +119,7 @@ namespace LabMPPCS.repository
         /// <param name="item"></param>
         public void Update(T item)
         {
+            _validator.Validate(item);
             try
             {
                 var con = _databaseConnectionManager.GetConnection();

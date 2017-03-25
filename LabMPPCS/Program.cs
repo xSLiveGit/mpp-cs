@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using LabMppCsharp.utils;
 using LabMPPCS.controller;
 using LabMPPCS.repository;
+using LabMPPCS.Validator;
 
 namespace LabMPPCS
 {
@@ -21,9 +22,13 @@ namespace LabMPPCS
             Application.SetCompatibleTextRenderingDefault(false);
             DatabaseConnectionManager databaseConnectionManager = new DatabaseConnectionManager();
             
-            MatchRepository matchRepository = new MatchRepository(databaseConnectionManager,"matches");
-            TicketRepository ticketRepository = new TicketRepository(databaseConnectionManager,"tickets");
-            UserRepository userRepository = new UserRepository(databaseConnectionManager,"users");
+            MatchValidator matchValidator = new MatchValidator();
+            TicketValidator ticketValidator = new TicketValidator();
+            UserValidator userValidator = new UserValidator();
+
+            MatchRepository matchRepository = new MatchRepository(databaseConnectionManager,"matches",matchValidator);
+            TicketRepository ticketRepository = new TicketRepository(databaseConnectionManager,"tickets",ticketValidator);
+            UserRepository userRepository = new UserRepository(databaseConnectionManager,"users",userValidator);
 
             MatchController matchController = new MatchController(matchRepository);
             TicketController ticketController = new TicketController(ticketRepository,matchRepository);
