@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +38,22 @@ namespace LabMPPCS.repository
         {
             Match m = new Match(reader.GetInt32(0),reader.GetString(1),reader.GetString(2),reader.GetString(3),reader.GetInt32(4),reader.GetDouble(5));
             return m;
+        }
+
+        public void SellTickets(Int32 id, Int32 quantity)
+        {
+            String querry = $"UPDATE {this._tableName} SET tickets = (tickets - @tick) WHERE id = @searchedId";
+            try {
+                using (var cmd = _databaseConnectionManager.GetConnection().CreateCommand())
+                {
+                    cmd.CommandText = querry;
+                    cmd.Parameters.AddWithValue("@tick",quantity);
+                    cmd.Parameters.AddWithValue("@searchedId", id);
+                    cmd.ExecuteNonQuery();
+                }
+            } catch (MySqlException e) {
+                CodeThrowExceptionStatement(e);
+            }
         }
     }
 }

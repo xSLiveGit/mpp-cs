@@ -36,13 +36,14 @@ namespace LabMPPCS.controller
 
             try
             {
-                var match = this._matchRepository.FindById(idMatch);
-                if (quantity > match.Tickets)
-                {
-                    CodeThrowExceptionStatement("Insuficien ttickets");
-                }
-                match.Tickets -= quantity;
-                this._matchRepository.Update(match);
+//                var match = this._matchRepository.FindById(idMatch);
+//                if (quantity > match.Tickets)
+//                {
+//                    CodeThrowExceptionStatement("Insuficien ttickets");
+//                }
+//                match.Tickets -= quantity;
+//                this._matchRepository.Update(match);
+                this._matchRepository.SellTickets(idMatch,quantity);
                 this._ticketRepository.AddId(new Ticket(quantity,idMatch,person));
             }
             catch (Exception e)

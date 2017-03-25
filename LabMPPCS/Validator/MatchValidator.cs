@@ -32,6 +32,10 @@ namespace LabMPPCS.Validator
                 errList.Add("Stage can't be empty string.");
             if(stage.Length > 30)
                 errList.Add("The length of stage must be <= 30");
+            if (!stage.Equals("Final") && !stage.StartsWith("Semifinal ") && !stage.StartsWith("Group "))
+            {
+                errList.Add("Stage is invalid. Stage must be \"Final\", \"Semifinal x\" or \"Group x\" where x is a big letter.");
+            }
         }
 
         public void ValidatePrice(Double price)

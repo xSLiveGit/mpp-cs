@@ -63,6 +63,10 @@ namespace LabMPPCS.domain
             Team2 = team2;
             Stage = stage;
             Price = price;
+            if (tickets < 0)
+            {
+                throw new EntityArgumentException("Numbers of tickets must be positive.");
+            }
         }
 
         protected bool Equals(Match other)
