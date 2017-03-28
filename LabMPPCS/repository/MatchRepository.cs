@@ -52,7 +52,7 @@ namespace LabMPPCS.repository
                     cmd.ExecuteNonQuery();
                 }
             } catch (MySqlException e) {
-                CodeThrowExceptionStatement(e);
+                CodeThrowExceptionStatement("Insufficient tickets.");
             }
         }
     }

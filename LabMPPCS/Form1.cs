@@ -91,6 +91,17 @@ namespace LabMPPCS
                         Tickets = match.Tickets,
                         Price = match.Price
                     }).ToList();
+            foreach (DataGridViewRow Myrow in dataGridViewMatches.Rows)
+            {            //Here 2 cell is target value and 1 cell is Volume
+                if (Convert.ToInt32(Myrow.Cells[3].Value).Equals(0))// Or your condition 
+                {
+                    Myrow.DefaultCellStyle.ForeColor = Color.Red;
+                }
+                else
+                {
+                    Myrow.DefaultCellStyle.ForeColor = Color.Black;
+                }
+            }
         }
 
         private void button_FilterSort_Click(object sender, EventArgs e)

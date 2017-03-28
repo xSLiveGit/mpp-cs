@@ -246,6 +246,11 @@ namespace LabMPPCS.repository
             throw new RepositoryException(e);
         }
 
+        protected void CodeThrowExceptionStatement(String e)
+        {
+            throw new RepositoryException(e);
+        }
+
         protected abstract String GetIdName();
         protected abstract Dictionary<String, String> ToMap(T item);
         protected abstract T ToObject(MySqlDataReader reader);
