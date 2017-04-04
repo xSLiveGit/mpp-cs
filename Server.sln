@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{01260775-34F7-47CB-B758-3F43BEBC3B1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SellTicketsPersistence", "persistence\SellTicketsPersistence.csproj", "{65BF3DB1-4C28-405D-823B-3A93D5D6BED8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SellTicketsModel", "SellTicketsModel\SellTicketsModel.csproj", "{E058DA35-FFB6-4219-868C-BD7D5E37F16E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SellTicketsServices", "SellTicketsServices\SellTicketsServices.csproj", "{4ADFA117-34D2-463F-9BC5-99E57547968F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SellTicketsNetworking", "SellTicketsNetworking\SellTicketsNetworking.csproj", "{FD13C519-BBC7-4A94-8918-AE6F22F19F90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabMPPCS", "..\MPP_CS\LabMPPCS\LabMPPCS.csproj", "{B454B79A-3EA0-4240-A82D-FCAD87876665}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{E2CC9044-99EB-4EEA-BA35-2531EF7AEF02}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01260775-34F7-47CB-B758-3F43BEBC3B1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01260775-34F7-47CB-B758-3F43BEBC3B1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01260775-34F7-47CB-B758-3F43BEBC3B1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01260775-34F7-47CB-B758-3F43BEBC3B1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65BF3DB1-4C28-405D-823B-3A93D5D6BED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65BF3DB1-4C28-405D-823B-3A93D5D6BED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65BF3DB1-4C28-405D-823B-3A93D5D6BED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65BF3DB1-4C28-405D-823B-3A93D5D6BED8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E058DA35-FFB6-4219-868C-BD7D5E37F16E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E058DA35-FFB6-4219-868C-BD7D5E37F16E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E058DA35-FFB6-4219-868C-BD7D5E37F16E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E058DA35-FFB6-4219-868C-BD7D5E37F16E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ADFA117-34D2-463F-9BC5-99E57547968F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ADFA117-34D2-463F-9BC5-99E57547968F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ADFA117-34D2-463F-9BC5-99E57547968F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ADFA117-34D2-463F-9BC5-99E57547968F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD13C519-BBC7-4A94-8918-AE6F22F19F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD13C519-BBC7-4A94-8918-AE6F22F19F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD13C519-BBC7-4A94-8918-AE6F22F19F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD13C519-BBC7-4A94-8918-AE6F22F19F90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B454B79A-3EA0-4240-A82D-FCAD87876665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B454B79A-3EA0-4240-A82D-FCAD87876665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B454B79A-3EA0-4240-A82D-FCAD87876665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B454B79A-3EA0-4240-A82D-FCAD87876665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2CC9044-99EB-4EEA-BA35-2531EF7AEF02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2CC9044-99EB-4EEA-BA35-2531EF7AEF02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2CC9044-99EB-4EEA-BA35-2531EF7AEF02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2CC9044-99EB-4EEA-BA35-2531EF7AEF02}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
