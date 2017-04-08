@@ -92,6 +92,7 @@ namespace Server
             {
                 if (!username.Equals(usernameI))
                 {
+                    Console.WriteLine(username);
                     Console.WriteLine("Notified : " + username);
                     this._loggedClients[username].ShowUpdates(match);
                 }

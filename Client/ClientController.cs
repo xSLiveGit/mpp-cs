@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using LabMPPCS;
 using Microsoft.SqlServer.Server;
 using SellTicketsModel.entity;
 using SellTicketsServices;
@@ -12,9 +13,10 @@ namespace Client
 {
     public class ClientController : ISellTicketsClient
     {
-        private Form _parentForm = null;
+        private Form1 _parentForm = null;
 
-        public Form ParentForm
+        private delegate void UpdateM(Match m);
+        public Form1 ParentForm
         {
             get { return _parentForm; }
             set { _parentForm = value; }
@@ -30,7 +32,7 @@ namespace Client
 
         public void ShowUpdates(Match match)
         {
-            throw new NotImplementedException();
+            _parentForm.UpdateMatch(match);
         }
 
         public List<Match> GetAllMatches()

@@ -98,6 +98,60 @@ namespace LabMPPCS
             }
         }
 
+        public void UpdateMatch(Match m)
+        {
+            Console.WriteLine("inainte de plm");
+
+            this.Invoke((MethodInvoker)delegate {
+                plm(m);
+            });
+        }
+
+        private void plm(Match m)
+        {
+                Console.WriteLine("plm");
+                var index = 0;
+                foreach (var el in matchList)
+                {
+                    if (el.Id.Equals(m.Id))
+                    {
+                        this.matchList[index] = m;
+                        break;
+                    }
+                    index++;
+                }
+            dataGridViewMatches.Columns.Clear();//DE CE DACA ADAUG DIN INTERFATA NU POT LEGA BUTOANELE?
+            dataGridViewMatches.DataSource = matchList.Select(match =>
+                    new {
+                        Team1 = match.Team1,
+                        Team2 = match.Team2,
+                        Stage = match.Stage,
+                        Tickets = match.Tickets,
+                        Price = match.Price
+                    }).ToList();
+            foreach (DataGridViewRow Myrow in dataGridViewMatches.Rows)
+            {            //Here 2 cell is target value and 1 cell is Volume
+                if (Convert.ToInt32(Myrow.Cells[3].Value).Equals(0))// Or your condition 
+                {
+                    Myrow.DefaultCellStyle.ForeColor = Color.Red;
+                }
+                else
+                {
+                    Myrow.DefaultCellStyle.ForeColor = Color.Black;
+                }
+            }
+            //            if (!_filtered)
+            //            {
+            //                BindTable(clientController.GetAllMatchesFilteredAndSorted());
+            //                _filtered = true;
+            //            }
+            //            else
+            //            {
+            //                BindTable(clientController.GetAllMatches());
+            //                _filtered = false;
+            //            }
+        }
+
         private void button_FilterSort_Click(object sender, EventArgs e)
         {
             if (!_filtered)

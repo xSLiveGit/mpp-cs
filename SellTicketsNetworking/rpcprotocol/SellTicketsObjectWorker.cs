@@ -44,6 +44,8 @@ namespace SellTicketsNetworking.rpcprotocol
             {
                 try
                 {
+                    if (!stream.DataAvailable)
+                        continue;
                     object request = formatter.Deserialize(stream);
                     object response = HandleRequest((Request)request);
                     if (response != null)
