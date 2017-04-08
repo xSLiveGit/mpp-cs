@@ -13,7 +13,7 @@ namespace SellTicketsServices
         void Logout(User user, ISellTicketsClient client);
         void SellTickets(String idMatch, String quantity, String buyerPerson, String username);
 
-        IList<Match> GetAllMatches() ;
+        List<Match> GetAllMatches() ;
         List<Match> GetFilteredAndSortedMatches();
 
     }

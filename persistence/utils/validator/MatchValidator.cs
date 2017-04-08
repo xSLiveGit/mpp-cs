@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-
+using SellTicketsModel.exception;
+using Match = SellTicketsModel.entity.Match;
 namespace persistence.utils.validator
 {
     public class MatchValidator : IValidator<Match>

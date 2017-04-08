@@ -41,11 +41,13 @@ namespace SellTicketsNetworking
         public GetAllReponse(List<Match> list)
         {
             List = new List<MatchDTO>(list.Count);
-            list.ForEach(el => List.Add(new MatchDTO(el)
+            List<Match> lst = new List<Match>(list);
+            lst.ForEach(el => List.Add(new MatchDTO(el)
             ));
         }
     }
 
+    [Serializable]
     public class GetAllFilteredAndSortedResponse : IResponse
     {
         public List<MatchDTO> List { get; }

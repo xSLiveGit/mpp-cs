@@ -13,14 +13,14 @@ using SellTicketsServices;
 
 namespace SellTicketsNetworking.rpcprotocol
 {
-    class SellTicketsObjectWorker : ISellTicketsClient
+    public class SellTicketsObjectWorker : ISellTicketsClient
     {
         private readonly ISellTicketsServer server;
         private readonly TcpClient connection;
 
         private readonly NetworkStream stream;
         private readonly IFormatter formatter;
-        private volatile bool _connected;
+        private volatile bool _connected = true;
         public SellTicketsObjectWorker(ISellTicketsServer server, TcpClient connection)
         {
             this.server = server;
@@ -34,7 +34,7 @@ namespace SellTicketsNetworking.rpcprotocol
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(e.Message);
             }
         }
 
@@ -53,7 +53,7 @@ namespace SellTicketsNetworking.rpcprotocol
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e.Message);
                 }
 
                 try
@@ -62,7 +62,7 @@ namespace SellTicketsNetworking.rpcprotocol
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e.Message);
                 }
             }
             try
@@ -82,81 +82,104 @@ namespace SellTicketsNetworking.rpcprotocol
             IResponse response = null;
             if (request is LoginRequest)
             {
-                Console.WriteLine("Login request ...");
+                Console.WriteLine(value: "Login request ...");
                 LoginRequest logReq = (LoginRequest)request;
                 UserDTO udto = logReq.User;
-                User user = DTOUtils.GetFromDTO(udto);
+                User user = DTOUtils.GetFromDTO(usdto: udto);
                 try
                 {
                     lock (server)
                     {
-                        server.Login(user, this);
+                        server.Login(user: user, client: this);
                     }
                     return new OkResponse();
                 }
                 catch (ControllerException e)
                 {
-                    _connected = false;
-                    return new ErrorResponse(e.Message);
+                     _connected = false;
+                    return new ErrorResponse(message: e.Message);
                 }
             }
             if (request is LogoutRequest)
             {
-                Console.WriteLine("Logout request");
+                Console.WriteLine(value: "Logout request");
                 LogoutRequest logReq = (LogoutRequest)request;
                 UserDTO udto = logReq.User;
-                User user = DTOUtils.GetFromDTO(udto);
+                User user = DTOUtils.GetFromDTO(usdto: udto);
                 try
                 {
                     lock (server)
                     {
 
-                        server.Logout(user, this);
+                        server.Logout(user: user, client: this);
                     }
-                    _connected = false;
+                    //_connected = false;
                     return new OkResponse();
 
                 }
                 catch (ControllerException e)
                 {
-                    return new ErrorResponse(e.Message);
+                    _connected = false;
+                    return new ErrorResponse(message: e.Message);
                 }
             }
             if (request is GetAllRequest)
             {
-                Console.WriteLine("GetAllRequest");
+                Console.WriteLine(value: "GetAllRequest");
                 GetAllRequest getAllRequest = (GetAllRequest) request;
                 try
                 {
-                    List<Match> list = server.GetAllMatches();
+                    List<Match> list = null;
                     lock (server)
                     {
                         list = server.GetAllMatches();
                     }
-                    _connected = false;
-                    response =  new GetAllReponse(list);
+                   // _connected = false;
+                    response =  new GetAllReponse(list: list);
                 }
                 catch (Exception e)
                 {
-                    response = new ErrorResponse(e.Message);
+                    _connected = false;
+                    response = new ErrorResponse(message: e.Message);
                 }
             }
             if (request is GetAllFilteredAndSortedRequest)
             {
-                Console.WriteLine("GetAllFilteredAndSortedRequest");
+                Console.WriteLine(value: "GetAllFilteredAndSortedRequest");
                 GetAllFilteredAndSortedRequest getAllRequest = (GetAllFilteredAndSortedRequest)request;
                 try
                 {
-                    List<Match> list = server.GetAllMatches();
+                    List<Match> list = null;
                     lock (server)
                     {
-                        list = server.GetAllMatches();
+                        list = server.GetFilteredAndSortedMatches();
                     }
-                    _connected = false;
-                    response = new GetAllReponse(list);
+                   // _connected = false;
+                    response = new GetAllFilteredAndSortedResponse(list: list);
                 }
                 catch (Exception e)
                 {
+                    _connected = false;
+                    response = new ErrorResponse(message: e.Message);
+                }
+            }
+            if (request is SellTicketsRequest)
+            {
+                Console.WriteLine(value: "Worker - sellTickets");
+                SellTicketsRequest sellTicketsRequest = (SellTicketsRequest)request;
+                try
+                {
+                    SalesDTO sale = sellTicketsRequest.Sale;
+                    lock (server)
+                    {
+                        this.server.SellTickets(idMatch: sale.IdMatch, quantity: sale.Quantity, buyerPerson: sale.Person,
+                            username: sale.Username);
+                    }
+                    response = new OkResponse();
+                }
+                catch (Exception e)
+                {
+                    _connected = false;
                     response = new ErrorResponse(e.Message);
                 }
             }
@@ -168,7 +191,6 @@ namespace SellTicketsNetworking.rpcprotocol
             Console.WriteLine("sending response " + response);
             formatter.Serialize(stream, response);
             stream.Flush();
-
         }
 
         public void ShowUpdates(Match match)

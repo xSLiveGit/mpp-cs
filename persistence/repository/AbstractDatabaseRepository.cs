@@ -26,9 +26,9 @@ namespace persistence.repository
         /// If any error occur, RepositoryException will be throw
         /// </summary>
         /// <returns></returns>
-        public IList<T> GetAll()
+        public List<T> GetAll()
         {
-            IList<T> list = new List<T>();
+            List<T> list = new List<T>();
             var con = _databaseConnectionManager.GetConnection();
 
             using (var comm = con.CreateCommand())
@@ -202,9 +202,9 @@ namespace persistence.repository
             return el;
         }
 
-        public IList<T> GetAllByProperties(Dictionary<string, string> dictionary)
+        public List<T> GetAllByProperties(Dictionary<string, string> dictionary)
         {
-            IList<T> list = new List<T>();
+            List<T> list = new List<T>();
             var con = _databaseConnectionManager.GetConnection();
             List<String> conditionList = new List<string>(dictionary.Count);
             String condition = "";

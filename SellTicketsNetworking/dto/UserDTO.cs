@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SellTicketsNetworking
 {
+    [Serializable]
     public class UserDTO
     {
         public UserDTO(string username, string password)

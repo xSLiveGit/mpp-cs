@@ -23,13 +23,14 @@ namespace SellTicketsNetworking.rpcprotocol
         private TcpClient _connection;
 
         private readonly Queue<IResponse> _responses;
-        private volatile bool _finished;
+        private volatile bool _finished = false;
         private EventWaitHandle _waitHandle;
         public SellTicketsServerProxy(string host, int port)
         {
             this._host = host;
             this._port = port;
             _responses = new Queue<IResponse>();
+            this.InitializeConnection();
         }
 
         public virtual void Login(User user, ISellTicketsClient client)
@@ -181,32 +182,37 @@ namespace SellTicketsNetworking.rpcprotocol
 
         public void SellTickets(string idMatch, string quantity, string buyerPerson, string username)
         {
+            Console.WriteLine("Proxy - sellTicketsRequest");
             SendRequest(new SellTicketsRequest(new SalesDTO(
                 idMatch: idMatch,
                 quantity: quantity,
                 person: buyerPerson,
                 username: username)));
             var response = ReadResponse();
+            
+            Console.WriteLine("Proxy Sell ticket response: " + response.GetType().ToString());
             if (response is OkResponse) return;
             if (response is ErrorResponse)
             {
+                Console.WriteLine("Proxy Sell ticket error response: ");
+
                 throw new ControllerException(((ErrorResponse)response).Message);
             }
         }
 
-        public IList<Match> GetAllMatches()
+        public List<Match> GetAllMatches()
         {
             List<Match> matches = new List<Match>();
 
-            SendRequest(new GetAllRequest());
+            SendRequest(request: new GetAllRequest());
             var response = ReadResponse();
             if (response is ErrorResponse)
             {
-                throw new ControllerException(((ErrorResponse)response).Message);
+                throw new ControllerException(message: ((ErrorResponse)response).Message);
             }
             if (response is GetAllReponse)
             {
-                ((GetAllReponse)response).List.ForEach(el=>matches.Add(new Match(el.Id,el.Team1,el.Team2,el.Stage,el.Tickets,el.Price)));
+                ((GetAllReponse)response).List.ForEach(action: el=>matches.Add(item: new Match(id: el.Id,team1: el.Team1,team2: el.Team2,stage: el.Stage,tickets: el.Tickets,price: el.Price)));
             }
             
             return matches;
@@ -218,7 +224,7 @@ namespace SellTicketsNetworking.rpcprotocol
         {
             List<Match> matches = new List<Match>();
 
-            SendRequest(new GetAllRequest());
+            SendRequest(new GetAllFilteredAndSortedRequest());
             var response = ReadResponse();
             if (response is ErrorResponse)
             {

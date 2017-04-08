@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SellTicketsModel.entity;
+using SellTicketsModel.exception;
 
 namespace persistence.utils.validator
 {

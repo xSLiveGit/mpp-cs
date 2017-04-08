@@ -7,8 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using LabMppCsharp.utils.exceptions;
-using LabMPPCS.controller;
+using Client;
 using SellTicketsModel.entity;
 using SellTicketsModel.exception;
 using SellTicketsServices;
@@ -17,11 +16,11 @@ namespace LabMPPCS
 {
     public partial class LogInForm : Form
     {
-        private ISellTicketsServer server;
-        public LogInForm(ISellTicketsServer server)
+        private ClientController _client;
+        public LogInForm(ClientController client)
         {
             InitializeComponent();
-            this.server = server;
+            this._client = client;
         }
 
         private void button_LogIn_Click(object sender, EventArgs e)
@@ -30,8 +29,9 @@ namespace LabMPPCS
             String password = textBox_Username.Text;
             try
             {
-                this.server.Login(new User(username, password),this);
-                Form1 form = new Form1(server,this);
+                this._client.LogIn(username, password);
+                Form1 form = new Form1(this,_client);
+                this._client.ParentForm = form;
                 form.Show();
                 this.Hide();
                 

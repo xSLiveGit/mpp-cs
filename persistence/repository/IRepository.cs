@@ -6,7 +6,7 @@ namespace persistence.repository
 {
     public interface IRepository<T, in TId> where T : IHasId<TId>
     {
-        IList<T> GetAll();
+        List<T> GetAll();
         void Clear();
         void Add(T item);
         void Update(T item);

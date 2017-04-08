@@ -81,7 +81,7 @@ namespace SellTicketsServices.services
             }
         }
 
-        public IList<Match> GetAll()
+        public List<Match> GetAll()
         {
             try
             {
