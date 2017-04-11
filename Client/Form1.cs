@@ -100,16 +100,15 @@ namespace LabMPPCS
 
         public void UpdateMatch(Match m)
         {
-            Console.WriteLine("inainte de plm");
 
             this.Invoke((MethodInvoker)delegate {
-                plm(m);
+                InvokeUpdate(m);
             });
         }
 
-        private void plm(Match m)
+        private void InvokeUpdate(Match m)
         {
-                Console.WriteLine("plm");
+                Console.WriteLine("InvokeUpdate");
                 var index = 0;
                 foreach (var el in matchList)
                 {
